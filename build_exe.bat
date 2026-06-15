@@ -2,18 +2,24 @@
 echo ── Server Deployer — Build EXE ─────────────────────────────────────────────
 echo.
 
-REM Check Python
-python --version >nul 2>&1
+REM Check Python (tries both py launcher and python command)
+py --version >nul 2>&1
 if errorlevel 1 (
-    echo [ERROR] Python not found. Install from https://www.python.org/downloads/
-    pause
-    exit /b 1
+    python --version >nul 2>&1
+    if errorlevel 1 (
+        echo [ERROR] Python not found. Install from https://www.python.org/downloads/
+        pause
+        exit /b 1
+    )
+    set PYTHON=python
+) else (
+    set PYTHON=py
 )
 
 REM Create venv
 if not exist "%~dp0venv" (
     echo Creating virtual environment...
-    python -m venv "%~dp0venv"
+    %PYTHON% -m venv "%~dp0venv"
 )
 
 call "%~dp0venv\Scripts\activate.bat"

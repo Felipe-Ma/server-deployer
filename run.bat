@@ -1,3 +1,2 @@
 @echo off
-call "%~dp0venv\Scripts\activate.bat"
-python "%~dp0app.py"
+"%~dp0venv\Scripts\pythonw.exe" "%~dp0app.py"
